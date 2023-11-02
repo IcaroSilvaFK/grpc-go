@@ -68,7 +68,9 @@ func (c *Category) FindAll() (*[]Category, error) {
 
 func (c *Category) FindById(id string) (*Category, error) {
 
-	row := c.db.QueryRow("SELECT * FROM categories WHERE id = $1", id)
+	q := fmt.Sprintf("SELECT * FROM categories WHERE id = '%s'", id)
+
+	row := c.db.QueryRow(q)
 
 	if !errors.Is(row.Err(), nil) {
 		return nil, row.Err()
